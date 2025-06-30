@@ -4,7 +4,29 @@ window.addEventListener("load", function () {
   setTimeout(() => {
     preloader.classList.add("hidden");
   }, 1000);
+
+  // Initialize animations
+  initAnimations();
 });
+
+// Initialize animations for cards
+function initAnimations() {
+  // Writing cards
+  const writingCards = document.querySelectorAll(".writing-card");
+  writingCards.forEach((card, index) => {
+    setTimeout(() => {
+      card.classList.add("visible");
+    }, 300 * index);
+  });
+
+  // Student cards
+  const studentCards = document.querySelectorAll(".student-card");
+  studentCards.forEach((card, index) => {
+    setTimeout(() => {
+      card.classList.add("visible");
+    }, 300 * index);
+  });
+}
 
 // Achievements Carousel Functionality
 const slides = document.querySelectorAll(".slide");
@@ -125,42 +147,28 @@ const students = [
     bio: "Contemporary playwright exploring modern relationships. Two plays currently in production.",
     img: "https://randomuser.me/api/portraits/men/41.jpg",
   },
-  {
-    name: "Sophie Dubois",
-    major: "Memoir",
-    bio: "Writes about cross-cultural experiences and personal transformation. Developing a memoir.",
-    img: "https://randomuser.me/api/portraits/women/26.jpg",
-  },
-  {
-    name: "Kenji Tanaka",
-    major: "Experimental Fiction",
-    bio: "Pushes boundaries of narrative structure and form. Published in avant-garde literary journals.",
-    img: "https://randomuser.me/api/portraits/men/24.jpg",
-  },
 ];
 
 // Carousel variables
 let autoScrollInterval;
-const scrollSpeed = 2000;
+let currentStudentIndex = 0;
+const scrollSpeed = 4000; // 4 seconds
 
-// Initialize carousel
+// Initialize student carousel
 function initStudentCarousel() {
   const carousel = document.getElementById("studentCarousel");
   carousel.innerHTML = "";
 
-  // Create duplicate cards for infinite scrolling effect
-  const allStudents = [...students, ...students];
-
-  allStudents.forEach((student) => {
+  students.forEach((student) => {
     const card = document.createElement("div");
     card.className = "student-card";
     card.innerHTML = `
-                    <img src="${student.img}" alt="${student.name}" class="student-img">
-                    <h3 class="student-name">${student.name}</h3>
-                    <p class="student-major">${student.major}</p>
-                    <p class="student-bio">${student.bio}</p>
-                    <a href="#" class="view-profile">View Profile</a>
-                `;
+    <img src="${student.img}" alt="${student.name}" class="student-img">
+    <h3 class="student-name">${student.name}</h3>
+    <p class="student-major">${student.major}</p>
+    <p class="student-bio">${student.bio}</p>
+    <a href="#" class="view-profile">View Profile</a>
+  `;
     carousel.appendChild(card);
   });
 
@@ -170,15 +178,20 @@ function initStudentCarousel() {
   // Add hover event listeners
   carousel.addEventListener("mouseenter", stopAutoScroll);
   carousel.addEventListener("mouseleave", startAutoScroll);
+
+  // Initialize animations after cards are created
+  setTimeout(initAnimations, 100);
 }
 
 // Move carousel manually
 function moveCarousel(direction) {
   const carousel = document.getElementById("studentCarousel");
-  const scrollAmount = 250;
+  const scrollAmount = 300;
+  currentStudentIndex =
+    (currentStudentIndex + direction + students.length) % students.length;
 
-  carousel.scrollBy({
-    left: direction * scrollAmount,
+  carousel.scrollTo({
+    left: currentStudentIndex * (carousel.scrollWidth / students.length),
     behavior: "smooth",
   });
 }
@@ -186,19 +199,18 @@ function moveCarousel(direction) {
 // Auto-scroll function
 function autoScroll() {
   const carousel = document.getElementById("studentCarousel");
-  const scrollAmount = 1;
+  currentStudentIndex = (currentStudentIndex + 1) % students.length;
 
-  if (carousel.scrollLeft + carousel.clientWidth >= carousel.scrollWidth - 50) {
-    carousel.scrollTo({ left: 0, behavior: "auto" });
-  } else {
-    carousel.scrollBy({ left: scrollAmount, behavior: "auto" });
-  }
+  carousel.scrollTo({
+    left: currentStudentIndex * (carousel.scrollWidth / students.length),
+    behavior: "smooth",
+  });
 }
 
 // Start auto-scrolling
 function startAutoScroll() {
   stopAutoScroll();
-  autoScrollInterval = setInterval(autoScroll, 20);
+  autoScrollInterval = setInterval(autoScroll, scrollSpeed);
 }
 
 // Stop auto-scrolling
@@ -210,13 +222,4 @@ function stopAutoScroll() {
 document.addEventListener("DOMContentLoaded", function () {
   initCarousel();
   initStudentCarousel();
-});
-
-// Parallax effect for header background
-window.addEventListener("scroll", function () {
-  const scrollPosition = window.pageYOffset;
-  const headerBg = document.querySelector(".header-bg");
-  if (headerBg) {
-    headerBg.style.transform = `translateY(${scrollPosition * 0.5}px)`;
-  }
 });
