@@ -3,10 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Literary Lens | Student Writing Showcase</title>
+    <title>Student Shelf | Student Writing Showcase</title>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr"
+      crossorigin="anonymous"
     />
     <link
       href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;800&family=Raleway:wght@300;400;500;600;700&display=swap"
@@ -29,8 +35,8 @@
     </div>
 
     <!-- Navigation -->
-    <nav>
-      <a href="#" class="logo">Literary Lens</a>
+    <nav class="sticky-top">
+      <a href="#" class="logo">Student Shelf</a>
       <div class="nav-links">
         <a href="#writings">Writings</a>
         <a href="#students">Students</a>
@@ -44,10 +50,7 @@
     <section class="hero">
       <div class="hero-content">
         <h1>Where Words Create Worlds</h1>
-        <p>
-          Discover the extraordinary literary talents of tomorrow's authors,
-          poets, and storytellers
-        </p>
+        <p>A digital corner where every classroom creation finds its place.</p>
         <div class="cta-buttons">
           <a href="#writings" class="btn"
             ><i class="fas fa-book-open"></i> Explore Writings</a
@@ -335,7 +338,7 @@
     </section>
 
     <!-- Students Section with Carousel -->
-    <section id="students" class="students">
+    <section hidden id="students" class="students">
       <h2 class="section-title">Our Talented Writers</h2>
       <div class="carousel-container">
         <button class="carousel-btn prev" onclick="moveCarousel(-1)">
@@ -362,7 +365,7 @@
     <!-- Footer -->
     <footer>
       <div class="footer-content">
-        <div class="footer-logo">Literary Lens</div>
+        <div class="footer-logo">The student shelf</div>
         <p>
           Celebrating the art of writing and nurturing the voices of tomorrow
         </p>
@@ -384,7 +387,7 @@
         </div>
 
         <p class="copyright">
-          &copy; 2025 Literary Lens. All rights reservved.
+          &copy; 2025 The student shelf. All rights reserved.
         </p>
       </div>
     </footer>
